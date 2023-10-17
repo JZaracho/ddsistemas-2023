@@ -1,0 +1,285 @@
+<mat-tab-group>
+  <mat-tab label="Cursos">
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>supervised_user_circle</mat-icon>
+      </button>
+      <span>Cursos</span>
+      <span class="example-spacer"></span>
+      <button mat-raised-button color="warn" (click)="openDialog()">Agregar Curso</button>
+    </mat-toolbar>
+
+    <div class="container">
+      <div style="margin-top: 10px;">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="filtro por nombre" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort>
+
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+              <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="tema">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Tema </th>
+              <td mat-cell *matCellDef="let row"> {{row.tema == null ? "-": row.tema.nombre}} </td>
+            </ng-container>
+           
+
+            <ng-container matColumnDef="fechaInicio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de inicio </th>
+              <td mat-cell *matCellDef="let row"> {{row.fechaInicio | date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="idDocente">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Docente </th>
+              <td mat-cell *matCellDef="let row"> {{row.idDocente}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="editarCurso(row)" color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteCurso(row.id)" mat-icon-button color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsCursos"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsCursos;"></tr>
+
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[25,50, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+
+      </div>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab label="Temas">
+
+      <mat-toolbar color="primary">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+          <mat-icon>supervised_user_circle</mat-icon>
+        </button>
+        <span>Temas</span>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="openTema()">Agregar Tema</button>
+      </mat-toolbar>
+
+      <div class="container">
+        <div style="margin-top: 10px;">
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilterTema($event)" placeholder="filtro por nombre" #input>
+          </mat-form-field>
+
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSourceTemas" matSort>
+
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="duracion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Duracion </th>
+                <td mat-cell *matCellDef="let row"> {{row.duracion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let row">
+                  <button mat-icon-button (click)="editarTema(row)" color="primary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button (click)="deleteTema(row.id)" mat-icon-button color="warn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsTemas"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsTemas"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[25,50, 100]" aria-label="Select page of users"></mat-paginator>
+          </div>
+        </div>
+      </div>
+  </mat-tab>
+
+  <mat-tab label="Alumnos">
+      <mat-toolbar color="primary">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+          <mat-icon>supervised_user_circle</mat-icon>
+        </button>
+        <span>Alumnos</span>
+        <span class="example-spacer"></span>
+        <button mat-raised-button color="warn" (click)="openAlumnos()">Agregar Alumno</button>
+      </mat-toolbar>
+
+      <div class="container">
+      <div style="margin-top: 10px;">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilterAlumno($event)" placeholder="filtro por nombre" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSourceAlumno" matSort>
+
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+              <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaNacimiento">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Nacimiento </th>
+              <td mat-cell *matCellDef="let row"> {{row.fechaNacimiento | date}} </td> 
+           
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="editarAlumnos(row)" color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteAlumno(row.id)" mat-icon-button color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAlumnos"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsAlumnos;"></tr>
+
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[25, 50,100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+
+      </div>
+    </div>
+
+
+  </mat-tab>
+  <mat-tab label="Materiales">
+
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>supervised_user_circle</mat-icon>
+      </button>
+      <span>Materiales</span>
+      <span class="example-spacer"></span>
+      <button mat-raised-button color="warn" (click)="openMateriales()">Agregar Material</button>
+    </mat-toolbar>
+
+    <div class="container">
+      <div style="margin-top: 10px;">
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilterMaterial($event)" placeholder="filtro por nombre" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSourceMateriales" matSort>
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="titulo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Titulo </th>
+              <td mat-cell *matCellDef="let row"> {{row.titulo}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="costo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
+              <td mat-cell *matCellDef="let row"> {{row.costo | currency}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="idCurso">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> id Curso </th>
+              <td mat-cell *matCellDef="let row"> {{row.idCurso}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="stock">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+              <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="editarMateriales(row)" color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteMaterial(row.id)" mat-icon-button color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMateriales"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMateriales;"></tr>
+
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[25,50,  100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

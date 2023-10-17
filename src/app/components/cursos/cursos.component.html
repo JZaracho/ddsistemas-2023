@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Curso</h1>
+<div mat-dialog-content>
+
+  <form [formGroup]="agregarCursoForm">
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre del curso</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre">
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tema del curso</mat-label>
+      <mat-select formControlName="tema" placeholder="Tema">
+        <mat-option *ngFor="let tema of vtemas" [value]="tema">{{ tema.nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
+   <mat-form-field appearance="outline">
+      <mat-form-field>
+        <mat-label>Fecha de inicio</mat-label>
+        <input formControlName="fechaCurso" matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+    </mat-form-field> 
+  <!--   <mat-form-field appearance="outline">
+      <mat-label>Fecha de inicio</mat-label>
+      <input formControlName="fechaInicio" matInput placeholder="Fecha">
+    </mat-form-field> -->
+
+    <mat-form-field appearance="outline">
+      <mat-label>Docente</mat-label>
+      <input formControlName="idDocente" matInput placeholder="Docente">
+    </mat-form-field>
+  </form>
+
+</div>
+
+<div mat-dialog-action [align]="'end'">
+  <button style="margin: 8px;" mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button style="margin: 8px;" mat-raised-button color="primary" (click)="agregarCurso()">{{actionBtn}}</button>
+
+</div>

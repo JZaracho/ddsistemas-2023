@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Material</h1>
+<div mat-dialog-content>
+
+  <form [formGroup]="agregarMaterialForm">
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>Titulo</mat-label>
+      <input formControlName="titulo" matInput placeholder="titulo">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Costo</mat-label>
+        <input formControlName="costo" matInput placeholder="costo">
+      </mat-form-field>
+      <br>
+   <!--  <mat-form-field appearance="outline">
+        <mat-label>ID Curso</mat-label>
+        <input formControlName="idCurso" matInput placeholder="idcurso">
+      </mat-form-field> -->
+
+      <mat-form-field appearance="outline">
+        <mat-label>ID Curso</mat-label>
+        <mat-select formControlName="idCurso" placeholder="idcurso">
+          <mat-option *ngFor="let curso of listacurso" [value]="curso.id">{{ curso.nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Stock</mat-label>
+      <input formControlName="stock" matInput placeholder="stock">
+    </mat-form-field>
+  </form>
+
+</div>
+
+<div mat-dialog-action [align]="'end'">
+  <button style="margin: 8px;" mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button style="margin: 8px;" mat-raised-button color="primary" (click)="agregarMateriales()">{{actionBtn}}</button>
+
+</div>
